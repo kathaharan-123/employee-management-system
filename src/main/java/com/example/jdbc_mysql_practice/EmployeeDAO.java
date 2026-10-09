@@ -150,6 +150,50 @@ public class EmployeeDAO {
 		
 	}
 	
+	public boolean findEmployee(Employee employee) {
+		
+		String sql = """
+				SELECT * FROM employees
+				WHERE id = ?;
+				""";
+		try {
+			
+			Connection connection = 
+					DBConnection.getConnection();
+			
+			PreparedStatement statement = 
+					connection.prepareStatement(sql);
+			
+			statement.setInt(1, employee.getID());
+			
+			ResultSet result = 
+					statement.executeQuery();
+			
+			if (result.next()) {
+
+                int employeeId = result.getInt("id");
+                String name = result.getString("name");
+                String department = result.getString("department");
+                int salary = result.getInt("salary");
+
+                System.out.println(employeeId+" | "+name+" | "+department+" | "+salary);
+                
+                return true;
+
+            } else {
+
+                System.out.println("Employee not found.");
+
+            }
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 	public void updateEmployee(int choice, Employee employee) {
 
 	    String sql;

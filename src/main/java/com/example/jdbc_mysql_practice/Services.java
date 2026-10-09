@@ -70,10 +70,13 @@ public class Services {
 		
 		employee.setID(id);
 		
-		employeeDAO.searchEmployee(employee);
+		if(!employeeDAO.findEmployee(employee)) {
+			return;
+		}
 		
 		while(true) {
-			System.out.println("Update Entity\n1.Department\n2.Salary");
+			System.out.println();
+			System.out.println("Update Entity\n1.Department\n2.Salary\n3.Both\n");
 			int choice = InputUtil.readInt(scanner, "Enter the choice");
 			
 			switch(choice) {
